@@ -34,6 +34,24 @@ $datetime = $sitesetup ? json_decode($sitesetup->value) : null;
                                             @endhasanyrole
                                         @endif
                                     </div>
+                                    <div class="w3-third">
+                                        @if($bookingdata->handymanAdded->count() == 0 && $bookingdata->status !== "cancelled")
+                                            @hasanyrole('admin|demo_admin|provider')
+                                            <a href="{{ route('provider.index', ['service_id'=> $bookingdata->service_id]) }}" target="_blank"
+                                            class=" float-end btn btn-primary"><i class="lab la-telegram-plane"></i>
+                                            {{ __('messages.view_available_provider') }}</a>
+                                            @endhasanyrole
+                                        @endif
+                                    </div>
+                                    <div class="w3-third">
+                                        @if($bookingdata->handymanAdded->count() == 0 && $bookingdata->status !== "cancelled")
+                                            @hasanyrole('admin|demo_admin|provider')
+                                            <a href="{{ route('handyman.index', ['service_id'=> $bookingdata->service_id]) }}" target="_blank"
+                                            class=" float-end btn btn-primary"><i class="lab la-telegram-plane"></i>
+                                            {{ __('messages.view_available_engineer') }}</a>
+                                            @endhasanyrole
+                                        @endif
+                                    </div>
 
                                 @if($bookingdata->payment_id !== null)
                                     <a href="{{route('invoice_pdf',$bookingdata->id)}}" class="btn btn-primary" target="_blank">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserServiceAnswer;
 use App\Models\Category;
+use App\Models\Service;
 use App\Models\UserAnswer;
 use App\Models\Question;
 use App\Models\QuestionCategory;
@@ -30,6 +31,7 @@ class HandymanController extends Controller
      */
     public function index(Request $request)
     {
+        $service_id = ($request->service_id) ? $request->service_id : null;
         $filter = [
             'status' => $request->status,
         ];
@@ -43,12 +45,26 @@ class HandymanController extends Controller
         $auth_user = authSession();
         $assets = ['datatable'];
         $list_status = $request->status;
-        return view('handyman.index', compact('list_status', 'pageTitle', 'auth_user', 'assets', 'filter'));
+        return view('handyman.index', compact('list_status', 'pageTitle', 'auth_user', 'assets', 'filter','service_id'));
     }
 
     public function index_data(DataTables $datatable, Request $request)
     {
+        $service_id = $request->service_id;
+
         $query = User::where('user_type', 'handyman');
+
+        if($service_id != null){
+            $categoryId = Service::where('id', $service_id)->pluck('category_id')->first();
+
+            $userIds = UserServiceAnswer::where('category_id', $categoryId)
+                            ->where('answer', 'yes')
+                            ->pluck('user_id');
+
+            $userIdsArray = $userIds->toArray();
+
+            $query = $query->whereIn('id', $userIdsArray);
+        }
 
         $filter = $request->filter;
 

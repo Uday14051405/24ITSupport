@@ -881,6 +881,8 @@
     'original_price' => 'Original Price',
     'tax_not_included' => 'Tax not included',
     'assign_provider' => 'Assign Provider',
+    'view_available_provider' => 'View Available Provider',
+    'view_available_engineer' => 'View Available Engineer',
     'assign_handyman' => 'Assign Engineer',
     'view_handyman_payout' => 'View Engineer Payout',
     'view_provider_payout' => 'View Provider Payout',

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Booking;
 use App\Models\Category;
+use App\Models\Service;
 use App\Models\UserServiceAnswer;
 use App\Models\QuestionCategory;
 use App\Models\Question;
@@ -36,6 +37,7 @@ class ProviderController extends Controller
      */
     public function index(Request $request)
     {
+        $service_id = ($request->service_id) ? $request->service_id : null;
         $filter = [
             'status' => $request->status,
         ];
@@ -50,12 +52,27 @@ class ProviderController extends Controller
         $auth_user = authSession();
         $assets = ['datatable'];
         $list_status = $request->status;
-        return view('provider.index', compact('list_status','pageTitle','auth_user','assets','filter'));
+        return view('provider.index', compact('list_status','pageTitle','auth_user','assets','filter','service_id'));
     }
 
     public function index_data(DataTables $datatable,Request $request)
     {
+        $service_id = $request->service_id;
+
         $query = User::query();
+        
+        if($service_id != null){
+            $categoryId = Service::where('id', $service_id)->pluck('category_id')->first();
+
+            $userIds = UserServiceAnswer::where('category_id', $categoryId)
+                            ->where('answer', 'yes')
+                            ->pluck('user_id');
+
+            $userIdsArray = $userIds->toArray();
+
+            $query = $query->whereIn('id', $userIdsArray);
+        }
+
         $filter = $request->filter;
 
         if (isset($filter)) {
