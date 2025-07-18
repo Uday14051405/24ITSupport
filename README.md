@@ -20,15 +20,10 @@ A **Laravel & Vue.js** based IT support and service management system designed t
 - **Backend**: Laravel 10+
 - **Frontend**: Vue.js 3
 - **Database**: MySQL
-- **Payment Integration**: Stripe / Razorpay (customizable)
+- **Payment Integration**: Razorpay
 - **Authentication**: Laravel Sanctum
 - **Deployment**: Apache/Nginx
 
 ---
 
-## 📦 Installation Guide
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/Uday14051405/24ITSupport.git
-cd 24ITSupport
+**Live Website:** [https://24itsupport.com/](https://24itsupport.com/)
