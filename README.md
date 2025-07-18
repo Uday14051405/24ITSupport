@@ -25,5 +25,3 @@ A **Laravel & Vue.js** based IT support and service management system designed t
 - **Deployment**: Apache/Nginx
 
 ---
-
-**Live Website:** [https://24itsupport.com/](https://24itsupport.com/)
